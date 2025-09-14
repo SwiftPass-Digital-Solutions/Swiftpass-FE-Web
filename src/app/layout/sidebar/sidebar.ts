@@ -1,10 +1,10 @@
-import { LogoComponent } from '../../shared/components/logo';
-import { Component, inject, signal } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { NgFor } from '@angular/common';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { UserType } from '@shared/enums/app-enums';
+import { AuthService } from 'src/app/auth/auth.service';
+import { BusinessMenu, UserMenu } from './sidebar-constants';
 
-interface MenuItem {
+export interface MenuItem {
   label: string;
   routerLink: string;
   svg: string;
@@ -17,13 +17,18 @@ interface MenuItem {
   templateUrl: './sidebar.html',
 
 })
-export class Sidebar {
+export class Sidebar implements OnInit {
+  private authService = inject(AuthService);
 
-  private sanitizer = inject(DomSanitizer);
+  user = computed(() => this.authService.user());
 
   menuItems = signal<MenuItem[]>([]);
 
-  getSafeSvg(svg: string): SafeHtml {
-    return this.sanitizer.bypassSecurityTrustHtml(svg);
+  ngOnInit(){
+    if(this.user()?.userType === UserType.SwiftPassUser){
+      this.menuItems.set(UserMenu);
+    }else if(this.user()?.userType === UserType.Business){
+      this.menuItems.set(BusinessMenu);
+    }
   }
 }

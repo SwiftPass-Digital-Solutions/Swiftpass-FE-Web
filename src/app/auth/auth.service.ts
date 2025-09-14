@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { environment } from "@env/environment";
 import { BaseResponse } from "@shared/models/api";
 import { Observable, tap } from "rxjs";
-import { CompleteRegistrationPayload, ConfirmEmail, LoginResponse, RegisterUser, User, UserLogin } from "./auth.model";
+import { CompleteRegistrationPayload, ConfirmEmail, LoginResponse, RegisterUser, UserLogin } from "./auth.model";
 
 @Injectable({
     providedIn: 'root'
@@ -14,11 +14,11 @@ export class AuthService {
     private http = inject(HttpClient);
     private apiUrl = `${environment.apiUrl}/Identity`;
 
-    private _user = signal<User | null>(sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user') as string) : null);
+    private _user = signal<LoginResponse | null>(sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user') as string) : null);
     readonly user = computed(() => this._user());
     private _token = signal<string | null>(sessionStorage.getItem('token') || null);
     
-    setUser(user: User){
+    setUser(user: LoginResponse){
         this._user.set(user);
         sessionStorage.setItem('user', JSON.stringify(user));
     }
@@ -48,7 +48,7 @@ export class AuthService {
     registerUser(payload: RegisterUser): Observable<BaseResponse<string>> {
         return this.http.post<BaseResponse<string>>(`${this.apiUrl}/register`, payload).pipe(
             tap((res) => {
-                this.setUser(payload.swiftPassUser);
+                this.setUser(payload.swiftPassUser as LoginResponse);
             })
         );
     }

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { User } from './user';
 import { Overview } from './overview/overview';
+import { Vault } from './vault/vault';
 
 export const userRoutes: Routes = [
     {
@@ -15,6 +16,14 @@ export const userRoutes: Routes = [
             {
                 path: 'overview',
                 component: Overview
+            },
+            {
+                path: 'vault',
+                component: Vault
+            },
+            {
+                path: '**',
+                redirectTo: 'overview'
             }
         ]
     }
