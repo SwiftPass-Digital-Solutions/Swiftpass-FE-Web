@@ -4,31 +4,32 @@ import { Login } from './login/login';
 import { Otp } from './otp/otp';
 import { Register } from './register/register';
 import { CompleteRegistration } from './complete-registration/complete-registration';
+import { AUTH_ROUTES } from './auth.routes.paths';
 
 export const routes: Routes = [
     {
-        path: '',
+        path: AUTH_ROUTES.ROOT,
         component: Auth,
         children: [
             {
                 path: '',
                 pathMatch: 'full',
-                redirectTo: 'login'
+                redirectTo: AUTH_ROUTES.LOGIN
             },
             {
-                path: 'login',
+                path: AUTH_ROUTES.LOGIN,
                 component: Login
             },
             {
-                path: 'otp/:trackingId',
+                path: `${AUTH_ROUTES.OTP}/:trackingId`,
                 component: Otp
             },
             {
-                path: 'register',
+                path: AUTH_ROUTES.REGISTER,
                 component: Register
             },
             {
-                path: 'complete-registration',
+                path: AUTH_ROUTES.COMPLETE_REGISTRATION,
                 component: CompleteRegistration
             }
         ]

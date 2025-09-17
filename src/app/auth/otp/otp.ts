@@ -1,16 +1,17 @@
 import { AfterViewInit, Component, computed, inject, OnInit, signal } from '@angular/core';
-import { LogoComponent } from '@shared/components/logo';
+import { Logo } from '@shared/components/logo';
 import { Button } from "@shared/components/button";
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { NgOtpInputComponent } from 'ng-otp-input';
 import { finalize } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { AUTH_ROUTES } from '../auth.routes.paths';
 
 
 @Component({
   selector: 'app-login',
-  imports: [LogoComponent, Button, NgOtpInputComponent],
+  imports: [Logo, Button, NgOtpInputComponent],
   templateUrl: './otp.html',
 })
 export class Otp implements OnInit, AfterViewInit {
@@ -56,7 +57,7 @@ export class Otp implements OnInit, AfterViewInit {
     .subscribe({
       next: (res) => {
         this.authService.setToken(res.data);
-        this.router.navigate(['complete-registration']);
+        this.router.navigate([AUTH_ROUTES.COMPLETE_REGISTRATION]);
       }
     })
   }
@@ -68,14 +69,14 @@ export class Otp implements OnInit, AfterViewInit {
     .subscribe({
       next: (res) => {
         this.trackingId.set(res.data);
-        this.router.navigate(['otp', res.data]);
+        this.router.navigate([AUTH_ROUTES.OTP, res.data]);
         this.toast.success('OTP sent successfully');
       }
     })
   }
 
   goBack(){
-    this.router.navigate(['/register']);
+    this.router.navigate([`/${AUTH_ROUTES.REGISTER}`]);
   }
 
   startCountDown(){

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Optional, Self, input } from '@angular/core';
+import { Component, Optional, Self, input, model } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
@@ -7,13 +7,13 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
   imports: [CommonModule],
   templateUrl: './input.html',
 })
-export class InputComponent implements ControlValueAccessor {
+export class Input implements ControlValueAccessor {
   readonly id = input();
   readonly type = input('text');
   readonly placeholder = input('');
   readonly required = input(false);
   label = input('');
-  @Input() disabled = false;
+  disabled = model(false);
 
   value = '';
 
@@ -41,7 +41,7 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    this.disabled.set(isDisabled);
   }
 
   onInput(event: Event): void {

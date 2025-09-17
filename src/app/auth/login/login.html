@@ -8,12 +8,14 @@
     </div>
     <form class="flex flex-col gap-5" [formGroup]="loginForm">
         <app-input
+            id="email"
             label="Email address"
             formControlName="email"
             type="email"
             placeholder="Enter your email"
         />
         <app-input
+            id="password"
             label="Password"
             formControlName="password"
             type="password"

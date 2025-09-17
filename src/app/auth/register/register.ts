@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { LogoComponent } from '@shared/components/logo';
+import { Logo } from '@shared/components/logo';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { InputComponent } from "@shared/components/input/input";
+import { Input } from "@shared/components/input/input";
 import { Button } from "@shared/components/button";
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -11,7 +11,7 @@ import { UserType } from '@shared/enums/app-enums';
 
 @Component({
   selector: 'app-register',
-  imports: [LogoComponent, ReactiveFormsModule, InputComponent, Button, RouterLink],
+  imports: [Logo, ReactiveFormsModule, Input, Button, RouterLink],
   templateUrl: './register.html',
 })
 export class Register {

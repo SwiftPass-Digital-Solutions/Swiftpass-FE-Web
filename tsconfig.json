@@ -18,6 +18,9 @@
     "paths": {
       "@core/*": ["src/app/core/*"],
       "@env/*": ["src/environments/*"],
+      "@auth/*": ["src/app/auth/*"],
+      "@user/*": ["src/app/features/user/*"],
+      "@business/*": ["src/app/features/business/*"],
       "@shared/*": ["src/app/shared/*"]
     },
   },

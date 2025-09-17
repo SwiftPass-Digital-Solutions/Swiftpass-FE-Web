@@ -1,22 +1,26 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { LogoComponent } from '@shared/components/logo';
+import { Component, inject, signal } from '@angular/core';
+import { Logo } from '@shared/components/logo';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { InputComponent } from "@shared/components/input/input";
+import { Input } from "@shared/components/input/input";
 import { Button } from "@shared/components/button";
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { finalize } from 'rxjs';
 import { UserType } from '@shared/enums/app-enums';
+import { USER_ROUTES } from 'src/app/features/user/user.routes.paths';
+import { ToastrService } from 'ngx-toastr';
+import { APP_ROUTES } from '../../app.routes.paths';
 
 @Component({
   selector: 'app-login',
-  imports: [LogoComponent, ReactiveFormsModule, InputComponent, Button, RouterLink],
+  imports: [Logo, ReactiveFormsModule, Input, Button, RouterLink],
   templateUrl: './login.html',
 })
 export class Login {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private authService = inject(AuthService);
+  private toast = inject(ToastrService);
   isLoading = signal(false);
 
   loginForm: FormGroup = this.fb.group({
@@ -36,9 +40,14 @@ export class Login {
     .pipe(finalize(() => this.isLoading.set(false)))
     .subscribe({
       next: (res) => {
-        if(res.data.userType === UserType.SwiftPassUser){
-          this.router.navigate(['user', 'overview']);
+        if(res.status){
+          if (res.data.userType === UserType.SwiftPassUser) {
+            this.router.navigate([APP_ROUTES.APP, APP_ROUTES.USER, USER_ROUTES.OVERVIEW]);
+          }
         }
+      },
+      error: (err) => {
+        this.toast.error(err.error?.message || 'An error occurred during login.');
       }
     });
   }

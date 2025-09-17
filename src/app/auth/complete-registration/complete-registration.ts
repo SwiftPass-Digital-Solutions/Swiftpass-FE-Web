@@ -1,7 +1,7 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { LogoComponent } from '@shared/components/logo';
+import { Logo } from '@shared/components/logo';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { InputComponent } from "@shared/components/input/input";
+import { Input } from "@shared/components/input/input";
 import { Button } from "@shared/components/button";
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -10,10 +10,11 @@ import { passwordMatchValidator } from '@shared/validators/password-match';
 import { CompleteRegistrationPayload } from '../auth.model';
 import { finalize } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { AUTH_ROUTES } from '../auth.routes.paths';
 
 @Component({
   selector: 'app-login',
-  imports: [LogoComponent, ReactiveFormsModule, InputComponent, Button, RouterLink],
+  imports: [Logo, ReactiveFormsModule, Input, Button, RouterLink],
   templateUrl: './complete-registration.html',
 })
 export class CompleteRegistration implements OnInit{
@@ -61,7 +62,7 @@ export class CompleteRegistration implements OnInit{
 
   ngOnInit(): void {
     if(!this.authService.getToken() || !this.user()?.email) {
-      this.router.navigate(['login']);
+      this.router.navigate([AUTH_ROUTES.LOGIN]);
     }
   }
 
@@ -84,12 +85,12 @@ export class CompleteRegistration implements OnInit{
     .subscribe({
       next: (res) => {
         this.toast.success(res.message || 'Registration successful');
-        this.router.navigate(['login']);
+        this.router.navigate([AUTH_ROUTES.LOGIN]);
       }
     })
   }
 
   goBack(){
-    this.router.navigate(['/register']);
+    this.router.navigate([AUTH_ROUTES.REGISTER]);
   }
 }

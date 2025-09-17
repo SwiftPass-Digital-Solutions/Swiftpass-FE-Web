@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { environment } from "@env/environment";
 import { BaseResponse } from "@shared/models/api";
 import { Observable, tap } from "rxjs";
-import { CompleteRegistrationPayload, ConfirmEmail, LoginResponse, RegisterUser, UserLogin } from "./auth.model";
+import { CompleteRegistrationPayload, ConfirmEmail, RegisterUser, User, UserLogin } from "./auth.model";
 
 @Injectable({
     providedIn: 'root'
@@ -14,11 +14,12 @@ export class AuthService {
     private http = inject(HttpClient);
     private apiUrl = `${environment.apiUrl}/Identity`;
 
-    private _user = signal<LoginResponse | null>(sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user') as string) : null);
+    private _user = signal<User | null>(sessionStorage.getItem('user') ? new User(JSON.parse(sessionStorage.getItem('user') as string)) : null);
     readonly user = computed(() => this._user());
     private _token = signal<string | null>(sessionStorage.getItem('token') || null);
     
-    setUser(user: LoginResponse){
+    setUser(user: User){
+        user = new User(user);
         this._user.set(user);
         sessionStorage.setItem('user', JSON.stringify(user));
     }
@@ -36,11 +37,11 @@ export class AuthService {
         sessionStorage.setItem('token', token);
     }
 
-    login(payload: UserLogin): Observable<BaseResponse<LoginResponse>> {
-        return this.http.post<BaseResponse<LoginResponse>>(`${this.apiUrl}/login`, payload).pipe(
+    login(payload: UserLogin): Observable<BaseResponse<User>> {
+        return this.http.post<BaseResponse<User>>(`${this.apiUrl}/login`, payload).pipe(
             tap((res) => {
                 this.setUser(res.data);
-                this.setToken(res.data.token);
+                this.setToken(res.data.token as string);
             })
         );
     }
@@ -48,7 +49,7 @@ export class AuthService {
     registerUser(payload: RegisterUser): Observable<BaseResponse<string>> {
         return this.http.post<BaseResponse<string>>(`${this.apiUrl}/register`, payload).pipe(
             tap((res) => {
-                this.setUser(payload.swiftPassUser as LoginResponse);
+                this.setUser(payload.swiftPassUser);
             })
         );
     }

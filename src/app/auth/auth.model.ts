@@ -17,22 +17,34 @@ export interface CompleteRegistrationPayload {
   token: string
 }
 
-export interface User {
-    firstName: string;
-    middleName?: string;
-    lastName: string;
-    email: string;
-}
-
 export interface UserLogin {
     email: string;
     password: string;
 }
 
-export interface LoginResponse {
-  email: string;
+export class User {
   firstName: string;
+  middleName?: string;
   lastName: string;
-  token: string;
+  email: string;
   userType: UserType;
+  token?: string;
+  hasSetUpSecurityQuestions: boolean;
+  hasCompletedProfileSetup: boolean;
+
+  constructor(user: User) {
+    this.firstName = user.firstName;
+    this.lastName = user.lastName;
+    this.email = user.email;
+    this.userType = user.userType;
+    this.hasSetUpSecurityQuestions = user.hasSetUpSecurityQuestions;
+    this.hasCompletedProfileSetup = user.hasCompletedProfileSetup
+  }
+
+  get fullName(): string {
+    // if (this.middleName) {
+    //   return `${this.firstName} ${this.middleName} ${this.lastName}`;
+    // }
+    return `${this.firstName} ${this.lastName}`;
+  }
 }
