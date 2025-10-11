@@ -1,0 +1,8 @@
+<div>
+    <p class="text-neutral-dark-200 text-sm">Let's get your data verified. Click on any of the Vaults to get started.</p>
+    <div class="flex">
+        @for(vault of vaults(); track $index){
+            <app-vault-card [vault]="vault" />
+        }
+    </div>
+</div>

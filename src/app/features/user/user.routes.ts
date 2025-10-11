@@ -16,11 +16,17 @@ export const userRoutes: Routes = [
             },
             {
                 path: USER_ROUTES.OVERVIEW,
-                component: Overview
+                component: Overview,
+                data: {
+                    title: USER_ROUTES.OVERVIEW
+                }
             },
             {
                 path: USER_ROUTES.VAULT,
-                component: Vault
+                component: Vault,
+                data: {
+                    title: USER_ROUTES.VAULT
+                }
             },
             {
                 path: '**',

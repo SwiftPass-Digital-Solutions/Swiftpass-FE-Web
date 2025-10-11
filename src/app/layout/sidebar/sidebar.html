@@ -1,4 +1,4 @@
-<div class="relative bg-[#FAFAFA] border border-[#F0F0F0] rounded-2xl p-5 w-full h-full flex flex-col justify-between">
+<div class="relative bg-[#FAFAFA] border border-[#F0F0F0] rounded-tr-2xl rounded-br-2xl p-4 w-full h-full flex flex-col justify-between lg:rounded-2xl">
     <div class="flex flex-col items-start gap-4">
         <div class="pb-5">
             <app-logo [showName]="false" />
@@ -11,6 +11,7 @@
                     class="flex text-[#666666] gap-1.5 cursor-pointer p-3"
                     [routerLink]="['/', 'app', app, item.routerLink]" 
                     routerLinkActive="text-primary-500 bg-[#F7F7F7] rounded-lg"
+                    (click)="toggleSidebar.emit()"
                 >
                     <span [innerHTML]="item.icon | safeHtml"></span>
                     <p class="text-sm">{{ item.label }}</p>
@@ -19,7 +20,7 @@
         </ul>
     </div>
 
-    <div class="flex gap-4 items-center bg-primary-500 rounded-xl p-4 overflow-hidden">
+    <div class="flex gap-4 items-center bg-primary-500 border border-primary-300 rounded-xl p-4">
         <div class="w-[42px] h-[42px] rounded-full">
             <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <circle cx="21" cy="21" r="20.5" fill="url(#pattern0_178_14887)" stroke="#020B2F" stroke-dasharray="3 3"/>
@@ -32,8 +33,8 @@
             </svg>
         </div>
         <div class="flex flex-col gap-1.5 text-white min-w-0">
-            <p class="text-lg truncate">{{ user()?.fullName }}</p>
-            <p class="text-sm truncate">{{ user()?.email }}</p>
+            <p class="text-base leading-none truncate lg:text-lg">{{ user()?.fullName }}</p>
+            <p class="text-xs leading-none truncate lg:text-sm">{{ user()?.email }}</p>
         </div>
     </div>
 </div>

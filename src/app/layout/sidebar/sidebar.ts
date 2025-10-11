@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, output, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { UserType } from '@shared/enums/app-enums';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -26,6 +26,8 @@ export class Sidebar implements OnInit {
   UserType = UserType;
 
   menuItems = signal<MenuItem[]>([]);
+
+  toggleSidebar = output();
 
   ngOnInit(){
     if(this.user()?.userType === UserType.SwiftPassUser){
