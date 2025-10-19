@@ -1,10 +1,11 @@
 import { Component, computed, inject, OnInit, signal } from "@angular/core";
 import { AuthService } from "src/app/auth/auth.service";
-import { VaultCard } from "./components/vault-card";
+import { VaultCard } from "./vault-card";
+import { Button } from "@shared/components/button";
 
 @Component({
     selector: 'app-vault',
-    imports: [VaultCard],
+    imports: [VaultCard, Button],
     templateUrl: './vault.html',
 })
 export class Vault implements OnInit{
@@ -19,12 +20,24 @@ export class Vault implements OnInit{
             {
                 name: 'Bio Data',
                 status: 'Awaiting Approval',
-                documentSize: '1.2MB',
+                documentSize: '1.2mb',
                 count: 4,
-                colors:{ 
-                    background: '#EDF3FE'
-                }
-            }
+                color: '#EDF3FE'
+            },
+            {
+                name: 'Identity Document',
+                status: 'Pending',
+                documentSize: '1.2mb',
+                count: 4,
+                color: '#FECEEC'
+            },
+            {
+                name: 'Home Address',
+                status: 'Pending',
+                documentSize: '1.2mb',
+                count: 4,
+                color: '#FEE2CE'
+            },
         ]);
     }
 }

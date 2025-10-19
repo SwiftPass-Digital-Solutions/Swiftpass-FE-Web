@@ -1,6 +1,17 @@
 <div>
-    <p class="text-neutral-dark-200 text-sm">Let's get your data verified. Click on any of the Vaults to get started.</p>
-    <div class="flex">
+    <div class="flex justify-between items-center gap-6 mb-6">
+        <p class="text-neutral-dark-200 text-sm">
+            {{ 
+                user()?.hasCompletedProfileSetup ? 
+                "Think of this as your digital safe, locked, organized, and fully under your control. Only you can access or share anything from here. Your identity, your rules." :
+                "Let's get your data verified. Click on any of the Vaults to get started."
+            }}
+        </p>
+        <app-button class="w-[179px]">
+            Add Vault
+        </app-button>
+    </div>
+    <div class="flex flex-wrap gap-5">
         @for(vault of vaults(); track $index){
             <app-vault-card [vault]="vault" />
         }

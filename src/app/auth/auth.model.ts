@@ -18,8 +18,8 @@ export interface CompleteRegistrationPayload {
 }
 
 export interface UserLogin {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 export class User {

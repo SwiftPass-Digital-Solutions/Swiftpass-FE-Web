@@ -8,7 +8,6 @@ import { AuthService } from '../auth.service';
 import { finalize } from 'rxjs';
 import { UserType } from '@shared/enums/app-enums';
 import { USER_ROUTES } from 'src/app/features/user/user.routes.paths';
-import { ToastrService } from 'ngx-toastr';
 import { APP_ROUTES } from '../../app.routes.paths';
 
 @Component({
@@ -20,7 +19,6 @@ export class Login {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private authService = inject(AuthService);
-  private toast = inject(ToastrService);
   isLoading = signal(false);
 
   loginForm: FormGroup = this.fb.group({
@@ -47,7 +45,6 @@ export class Login {
         }
       },
       error: (err) => {
-        this.toast.error(err.error?.message || 'An error occurred during login.');
       }
     });
   }
