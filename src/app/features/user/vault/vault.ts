@@ -1,6 +1,6 @@
 import { Component, computed, inject, OnInit, signal } from "@angular/core";
 import { AuthService } from "src/app/auth/auth.service";
-import { VaultCard } from "./vault-card";
+import { VaultCard } from "../../../shared/components/vault-card";
 import { Button } from "@shared/components/button";
 
 @Component({

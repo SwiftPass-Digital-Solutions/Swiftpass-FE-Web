@@ -7,7 +7,7 @@ import darkenColor from "@shared/utils/darkenColor";
         <div 
             [style.background-color]="vault().color" 
             [style.border-color]="borderColor"
-            class="relative min-w-[300px] h-[182px] rounded-[20px] border-[0.65px] p-4"
+            class="relative min-w-[300px] h-[182px] rounded-[20px] border-[0.65px] p-4 cursor-pointer"
         >
             <div class="flex items-center justify-between">
                 <h5 class="font-bold text-lg">{{ vault().name }}</h5>
